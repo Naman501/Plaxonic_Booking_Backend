@@ -16,7 +16,7 @@ const app = express();
 
 app.use(
   cors({
-    origin:["http://localhost:3000","http://localhost:3001"],
+    origin:["http://localhost:3000","http://localhost:3001","https://plaxonic-booking-admin-panel.vercel.app","https://plaxonic-booking-user-panel.vercel.app"],
     credentials:true
   }))
   
