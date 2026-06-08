@@ -8,41 +8,41 @@ import { OAuth2Client } from "google-auth-library";
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
-export const googleLogin = async (req:any, res:any) => {
-  const { token } = req.body;
+// export const googleLogin = async (req:any, res:any) => {
+//   const { token } = req.body;
 
-  try {
-    // 1. Verify the token came from Google
-    const ticket = await client.verifyIdToken({
-      idToken: token,
-      // assert that GOOGLE_CLIENT_ID is defined for TypeScript compatibility
-      audience: process.env.GOOGLE_CLIENT_ID!,
-    });
+//   try {
+//     // 1. Verify the token came from Google
+//     const ticket = await client.verifyIdToken({
+//       idToken: token,
+//       // assert that GOOGLE_CLIENT_ID is defined for TypeScript compatibility
+//       audience: process.env.GOOGLE_CLIENT_ID!,
+//     });
 
-    const payload = ticket.getPayload();
-    const { email, name, picture, sub: googleId } = payload!;
+//     const payload = ticket.getPayload();
+//     const { email, name, picture, sub: googleId } = payload!;
 
-    // 2. Find or create user in your DB
-    let user = await User.findOne({ email: email });
-    if (!user) {
-      user = await User.create({
-        name,
-        email,
-        googleId,
-        avatar: picture,
-        // no password field needed for Google users
-      });
-    }
+//     // 2. Find or create user in your DB
+//     let user = await User.findOne({ email: email });
+//     if (!user) {
+//       user = await User.create({
+//         name,
+//         email,
+//         googleId,
+//         avatar: picture,
+//         // no password field needed for Google users
+//       });
+//     }
 
-    // 3. Issue JWT exactly like your existing auth flow
-    const jwt = generateToken(user._id.toString(), user.role);
-    res.cookie("token", jwt, { httpOnly: true });
-    res.json({ success: true, user });
+//     // 3. Issue JWT exactly like your existing auth flow
+//     const jwt = generateToken(user._id.toString(), user.role);
+//     res.cookie("token", jwt, { httpOnly: true });
+//     res.json({ success: true, user });
 
-  } catch (err) {
-    res.status(401).json({ message: "Invalid Google token" });
-  }
-};
+//   } catch (err) {
+//     res.status(401).json({ message: "Invalid Google token" });
+//   }
+// };
 export const signup = async(req:Request,res:Response) => {
 
   try {

@@ -110,7 +110,7 @@ const hasPendingRequests =
 
 
 export const checkPendingRequests = async (
-  req: Request<{ roomId: string }>,
+  req:any,
   res: Response
 ) => {
   try {
